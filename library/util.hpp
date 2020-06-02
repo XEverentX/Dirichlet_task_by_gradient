@@ -14,7 +14,7 @@ namespace util
     }
 
     template<typename T>
-    inline auto norm(std::vector<T> v) -> T
+    inline auto norm(const std::vector<T> &v) -> T
     {
         T result = 0;
         for (auto x : v)
@@ -22,6 +22,19 @@ namespace util
             result += sqr(x);
         }
         return sqrt(result);
+    }
+
+    template<typename T>
+    inline auto scalarMul(const std::vector<T> &v1, const std::vector<T> &v2)
+    {
+        auto result = 0;
+        int size = v1.size();
+        for (int i = 0; i < size; i++)
+        {
+            result += v1[i] * v2[i];
+        }
+
+        return result;
     }
 }  // namespace util
 
