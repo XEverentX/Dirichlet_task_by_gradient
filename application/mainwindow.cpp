@@ -8,6 +8,9 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QHBoxLayout>
+
+#include <statistic.hpp>
+#include <task.hpp>
  
 Window::Window(QWidget *parent)
         : QWidget(parent) {
@@ -20,8 +23,8 @@ Window::Window(QWidget *parent)
     
 
     // LineEdit boxes
-    sizeXLineEdit = new QLineEdit("10", this);
-    sizeYLineEdit = new QLineEdit("10", this);
+    sizeXLineEdit = new QLineEdit("8", this);
+    sizeYLineEdit = new QLineEdit("8", this);
     epsLineEdit   = new QLineEdit("0.00000001", this);
     countLineEdit = new QLineEdit("1000", this);
 
@@ -82,7 +85,15 @@ Window::Window(QWidget *parent)
 
 void Window::run()
 {
+    Task task;
+    task.setBoundaries(0., 1., 0., 1.);
+    task.setPartition(sizeXLineEdit->text().toInt(), sizeYLineEdit->text().toInt());
 
+    auto result = task.solve(epsLineEdit->text().toDouble(), countLineEdit->text().toInt());
+
+    storyTextEdit->setText(QString::fromStdString(result.getReference()));
+
+    fillTable(realTable, result.realValue);
 }
 
 void Window::prepareTable(QTableWidget *table)
@@ -96,14 +107,26 @@ void Window::prepareTable(QTableWidget *table)
     }
     table->setHorizontalHeaderLabels(x);
     table->setVerticalHeaderLabels(y);
-
-    // table->resizeColumnsToContents();
-    // table->resizeRowsToContents();
 }
 
 void Window::fillTable(QTableWidget *table, const std::vector<std::vector<double>> &v)
 {
+    int m = v.size();
+    int n = v[0].size();
 
+    table->setColumnCount(n);
+    table->setRowCount(m);
+
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            realTable->setItem(m - i - 1, j, new QTableWidgetItem(QString::number(v[i][j])));
+        }
+    }
+
+    table->resizeColumnsToContents();
+    table->resizeRowsToContents();
 }
 
 void Window::setInfo()
