@@ -1,6 +1,17 @@
 #include "statistic.hpp"
 
-std::string Statistic::getReference() const
+Statistic::Statistic(int n_n, int n_m, int n_minEps, int n_maxCount)
+        : n(n_n), m(n_m), minEps(n_minEps), maxCount(n_maxCount),
+          discrepancyNorm(0.), initialDiscrepancyNorm(0.),
+          inaccuracy(0.), eps(0.), count(0.),
+          maxDiscrepancyX(0.), maxDiscrepancyY(0.)
+{
+    realValue   = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
+    diffValue   = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
+    solvedValue = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
+}
+
+auto Statistic::getReference() const -> std::string
 {
     std::string result = "Для решения тестовой задачи использована сетка-основа\n\
         с числом разбиений по x n = «" + std::to_string(n) + "» и числом разбиений по y m = «" + std::to_string(m) + "»,\n\

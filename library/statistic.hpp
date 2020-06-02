@@ -8,8 +8,13 @@
 
 class Statistic final
 {
+    friend class Task;
+    friend class Window;
+
  public:
     Statistic() = default;
+
+    explicit Statistic(int n_n, int n_m, int n_minEps, int n_maxCount);
 
     Statistic(const Statistic &other) = default;
     
@@ -17,7 +22,7 @@ class Statistic final
 
     ~Statistic() = default;
 
-    std::string getReference() const;
+    auto getReference() const -> std::string;
 
  private:
     int    n;
