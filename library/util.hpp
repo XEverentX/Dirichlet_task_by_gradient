@@ -24,14 +24,17 @@ namespace util
         return sqrt(result);
     }
 
-    template<typename T>
-    inline auto scalarMul(const std::vector<T> &v1, const std::vector<T> &v2)
+    inline auto scalarMul(const std::vector<std::vector<double>> &v1,
+                          const std::vector<std::vector<double>> &v2) -> double
     {
         auto result = 0;
         int size = v1.size();
         for (int i = 0; i < size; i++)
         {
-            result += v1[i] * v2[i];
+            for (int j = 0; j < v1[0].size(); j++)
+            {
+                result += v1[i][j] * v2[i][j];
+            }
         }
 
         return result;

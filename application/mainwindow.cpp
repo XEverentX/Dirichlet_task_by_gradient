@@ -46,9 +46,9 @@ Window::Window(QWidget *parent)
     solveTable = new QTableWidget(11, 11, this);
     diffTable  = new QTableWidget(11, 11, this);
 
-    prepareTable(realTable);
-    prepareTable(solveTable);
-    prepareTable(diffTable);
+    prepareTable(realTable, 9, 9);
+    prepareTable(solveTable, 9, 9);
+    prepareTable(diffTable, 9, 9);
  
     // Buttons
     runButton = new QPushButton("Запуск решения", this);
@@ -94,34 +94,41 @@ void Window::run()
     storyTextEdit->setText(QString::fromStdString(result.getReference()));
 
     fillTable(realTable, result.realValue);
+    fillTable(solveTable, result.solvedValue);
 }
 
-void Window::prepareTable(QTableWidget *table)
+void Window::prepareTable(QTableWidget *table, int n, int m)
 {
-    int n = 11;
     QStringList x, y;
     for (int i = 0; i < n; i++)
     {
         x.append("x" + QString::number(i));
-        y.append("y" + QString::number(n - i - 1));
     }
+
+    for (int i = 0; i < m; i++)
+    {
+        y.append("y" + QString::number(m - i - 1));
+    }
+
+    table->setColumnCount(n);
+    table->setRowCount(m);
+
     table->setHorizontalHeaderLabels(x);
     table->setVerticalHeaderLabels(y);
 }
 
 void Window::fillTable(QTableWidget *table, const std::vector<std::vector<double>> &v)
 {
-    int m = v.size();
-    int n = v[0].size();
+    int n = v.size();
+    int m = v[0].size();
 
-    table->setColumnCount(n);
-    table->setRowCount(m);
+    prepareTable(table, n, m);
 
-    for (int i = 0; i < m; i++)
+    for (int j = 0; j < m; j++)
     {
-        for (int j = 0; j < n; j++)
+        for (int i = 0; i < n; i++)
         {
-            realTable->setItem(m - i - 1, j, new QTableWidgetItem(QString::number(v[i][j])));
+            table->setItem(m - j - 1, i, new QTableWidgetItem(QString::number(v[i][j], 'g', 4)));
         }
     }
 

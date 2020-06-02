@@ -25,15 +25,31 @@ class Task final
     auto solve(double minEps, int maxCount) -> Statistic;
 
  private:
-    double k2;
-    double h2;
-    double a2;
+    auto getX(int index) const -> double;
+
+    auto getY(int index) const -> double;
+
+    auto getDiscrepancy(std::vector<std::vector<double>> &v) const noexcept -> void;
+
+    auto checkCoeficient(int i, int j) const noexcept-> bool;
+
+    auto isBoard(int i, int j) const noexcept -> bool;
+
+    inline void calcParams();
+
     double a;
     double b;
     double c;
     double d;
+    double h;
+    double k;
+    double a2;
+    double h2;
+    double k2;
     int    n;
     int    m;
+    int    nk;
+    int    mk;
 
     std::function<double(double, double)> u;
     std::function<double(double, double)> f;

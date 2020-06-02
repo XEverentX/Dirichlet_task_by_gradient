@@ -17,7 +17,7 @@ public:
 
     ~Window() = default;
 
-    void prepareTable(QTableWidget *table);
+    void prepareTable(QTableWidget *table, int n, int m);
 
     void fillTable(QTableWidget *table, const std::vector<std::vector<double>> &v);
 

@@ -6,9 +6,9 @@ Statistic::Statistic(int n_n, int n_m, int n_minEps, int n_maxCount)
           inaccuracy(0.), eps(0.), count(0.),
           maxDiscrepancyX(0.), maxDiscrepancyY(0.)
 {
-    realValue   = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
-    diffValue   = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
-    solvedValue = std::vector<std::vector<double>>(m + 1, std::vector<double>(n + 1));
+    realValue   = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
+    diffValue   = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
+    solvedValue = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
 }
 
 auto Statistic::getReference() const -> std::string
