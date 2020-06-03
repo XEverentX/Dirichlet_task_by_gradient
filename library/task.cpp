@@ -102,7 +102,7 @@ auto Task::isBoard(int i, int j) const noexcept-> bool
 {
     if (((j == mk || j == 3 * mk) && ((i >= 2 * nk && i <= 4 * nk) || (i >= 7 * nk)) || 
         ((j >= mk && j <= 3 * mk) && (i == 2 * nk || i == 4 * nk || i == 7 * nk))) ||
-        i == 0 || j == 0 || i == n || j == m)
+        (i == 0 || j == 0 || (i == n && (j <= mk || j >= 3 * mk)) || (j == m)))
     {
         return true;
     }
@@ -159,15 +159,21 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
     {
         for (int i = 0; i <= n; i++)
         {
-            result.realValue[i][j] = u(getX(i), getY(j));
+            if (checkCoeficient(i, j) || isBoard(i, j))
+            {
+                result.realValue[i][j] = u(getX(i), getY(j));
+            }
         }
     }
 
+    // solve
     do
     {
+        eps = 0.;
         getDiscrepancy(d);
         if (count == 0)
         {
+            result.initialDiscrepancyNorm = util::norm(d);
             h = d;
         } else 
         {
@@ -176,7 +182,7 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
             {
                 for (int i = 0; i <= n; i++)
                 {
-                    h[i][j] = -d[i][j] + betta * h[i][j];
+                    h[i][j] = d[i][j] + betta * h[i][j];
                 }
             }
         }
@@ -218,8 +224,32 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
         }
         count++;
 
-    } while(eps >= minEps && count <= maxCount);
+    } while(eps >= minEps && count < maxCount);
 
     result.solvedValue = v;
+    result.count       = count;
+    result.eps         = eps;
+    result.maxCount    = maxCount;
+    result.minEps      = minEps;
+
+    result.discrepancyNorm = util::norm(d);
+
+    result.inaccuracy = 0.;
+    for (int j = 0; j <= m; j++)
+    {
+        for (int i = 0; i <= n; i++)
+        {
+            result.diffValue[i][j] = std::fabs(result.realValue[i][j] - result.solvedValue[i][j]);
+            if(result.inaccuracy < result.diffValue[i][j])
+            {
+                result.inaccuracy = result.diffValue[i][j];
+
+                result.maxDiscrepancyX = getX(i);
+                result.maxDiscrepancyY = getY(j);
+
+            }
+        }
+    }
+    
     return result;
 }

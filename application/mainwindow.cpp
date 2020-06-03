@@ -23,9 +23,9 @@ Window::Window(QWidget *parent)
     
 
     // LineEdit boxes
-    sizeXLineEdit = new QLineEdit("8", this);
-    sizeYLineEdit = new QLineEdit("8", this);
-    epsLineEdit   = new QLineEdit("0.00000001", this);
+    sizeXLineEdit = new QLineEdit("80", this);
+    sizeYLineEdit = new QLineEdit("80", this);
+    epsLineEdit   = new QLineEdit("0.000005", this);
     countLineEdit = new QLineEdit("1000", this);
 
     infoTextEdit  = new QTextEdit("", this);
@@ -33,11 +33,12 @@ Window::Window(QWidget *parent)
 
     infoTextEdit->setReadOnly(true);
     storyTextEdit->setReadOnly(true);
+    storyTextEdit->setMinimumHeight(270);
     setInfo();
 
     // Labels
-    sizeXLabel = new QLabel("Число разбиений по X:", this);
-    sizeYLabel = new QLabel("Число разбиений по Y:", this);
+    sizeXLabel = new QLabel("Число разбиений по X (Кратно 8):", this);
+    sizeYLabel = new QLabel("Число разбиений по Y (Кратно 4):", this);
     epsLabel   = new QLabel("Точность:", this);
     countLabel = new QLabel("Максимально число итераций:", this);
 
@@ -95,6 +96,7 @@ void Window::run()
 
     fillTable(realTable, result.realValue);
     fillTable(solveTable, result.solvedValue);
+    fillTable(diffTable, result.diffValue);
 }
 
 void Window::prepareTable(QTableWidget *table, int n, int m)
@@ -128,7 +130,7 @@ void Window::fillTable(QTableWidget *table, const std::vector<std::vector<double
     {
         for (int i = 0; i < n; i++)
         {
-            table->setItem(m - j - 1, i, new QTableWidgetItem(QString::number(v[i][j], 'g', 4)));
+            table->setItem(m - j - 1, i, new QTableWidgetItem(QString::number(v[i][j], 'g', 6)));
         }
     }
 
@@ -140,17 +142,12 @@ void Window::setInfo()
 {
     infoTextEdit->setText(
         "   ПОСТАНОВКА ЗАДАЧИ \n\
-        \
+        Вариант 1\n\
         Δu(x,y) = –f*(x, y), где x пренадлежит (a, b), y пренадлежит (c, d).\n\
-        u(a,y) = μ*1(y), u(b,y) = μ*2(y), где y пренадлежит [c, d].\n\
-        u(x,c) = μ*3(x), u(x,d) = μ*4(x), где x пренадлежит [a, b].\n\
         Функции:\n \
         u(x,y) = exp(sin(pi*x*y)^2)\n \
-        f*(x,y) =  \n\
-        ГУ: \n\
-        μ1*(y) = 1, μ2*(y) = exp(sin(pi*y)^2) \n\
-        μ3*(x) = 1, μ4*(x) = exp(sin(pi*x)^2) \n\
-        Область: \n\
+        Область №3 c параметрами: \n\
         a = 0, b = 1, c = 0, d = 1. \n\
         ");
+    infoTextEdit->setMaximumHeight(130);
 }
