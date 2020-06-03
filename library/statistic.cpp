@@ -8,7 +8,6 @@ Statistic::Statistic(int n_n, int n_m, int n_minEps, int n_maxCount)
 {
     realValue   = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
     diffValue   = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
-    solvedValue = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
 }
 
 auto Statistic::getReference() const -> std::string
