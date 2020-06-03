@@ -33,7 +33,7 @@ include_directories(3rdparty)
 add_subdirectory(3rdparty/gtest)
 
 add_executable(simple_test tests/main.cpp tests/simple_test.cpp)
-target_link_libraries(simple_test gtest gtest_main ${CMAKE_THREAD_LIBS_INIT} pthread)
+target_link_libraries(simple_test gtest gtest_main ${CMAKE_THREAD_LIBS_INIT} pthread library)
 
 enable_testing()
 add_test(NAME simple_test COMMAND simple_test)
