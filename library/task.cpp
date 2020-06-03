@@ -132,6 +132,16 @@ auto Task::getDiscrepancy(std::vector<std::vector<double>> &h) const noexcept ->
     }
 }
 
+auto Task::getF(double x, double y) const noexcept -> double
+{
+    return f(x, y);
+}
+
+auto Task::getU(double x, double y) const noexcept -> double
+{
+    return u(x, y);
+}
+
 auto Task::solve(double minEps, int maxCount) -> Statistic
 {
     int    dx[]   = {0, 0, 1, 0, -1};

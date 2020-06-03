@@ -24,6 +24,10 @@ class Task final
 
     auto solve(double minEps, int maxCount) -> Statistic;
 
+    auto getF(double x, double y) const noexcept-> double;
+
+    auto getU(double x, double y) const noexcept -> double;
+
  private:
     auto getX(int index) const -> double;
 

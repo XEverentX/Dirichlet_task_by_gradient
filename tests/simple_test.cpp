@@ -10,7 +10,7 @@
 
 class simpleTest : public ::testing::Test {
  protected:
-    double epsilon = 0.0000001;
+    double epsilon = 0.0001;
 };
 
 TEST_F(simpleTest, scalarMul) {
@@ -26,4 +26,28 @@ TEST_F(simpleTest, scalarMul) {
     // Assert
     ASSERT_EQ(expected, result1);
     ASSERT_EQ(expected, result2);
+}
+
+TEST_F(simpleTest, fIsValid) {
+    // Arrange
+    double expected = -6.18309;
+    Task task;
+
+    // Act
+    double result = task.getF(0.2, 0.5);
+
+    // Assert
+    ASSERT_NEAR(expected, result, epsilon);
+}
+
+TEST_F(simpleTest, uIsValid) {
+    // Arrange
+    double expected = 1.100199473393;
+    Task task;
+
+    // Act
+    double result = task.getU(0.2, 0.5);
+
+    // Assert
+    ASSERT_NEAR(expected, result, epsilon);
 }
