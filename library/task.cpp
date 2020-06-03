@@ -59,11 +59,11 @@ inline void Task::calcParams()
     h = (b - a) / n;
     k = (d - c) / m;
 
-    h2 = util::sqr((1. / h));
-    k2 = util::sqr((1. / k));
+    h2 = 1. / util::sqr(h);
+    k2 = 1. / util::sqr(k);
     a2 = -2. * (h2 + k2);
 
-    v = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1));
+    v = std::vector<std::vector<double>>(n + 1, std::vector<double>(m + 1, 0));
 
     for (int j = 0; j <= m; j++)
     {
@@ -73,7 +73,6 @@ inline void Task::calcParams()
             {
                 v[i][j] = u(getX(i), getY(j));
             }
-            v[i][j] = u(getX(i), getY(j));
         }
     }
 }
@@ -111,7 +110,7 @@ auto Task::isBoard(int i, int j) const noexcept-> bool
     return false;
 }
 
-auto Task::getDiscrepancy(std::vector<std::vector<double>> &h) const noexcept -> void
+auto Task::getDiscrepancy(std::vector<std::vector<double>> &d) const noexcept -> void
 {
     for (int j = 1; j < m; j++)
     {
@@ -119,13 +118,13 @@ auto Task::getDiscrepancy(std::vector<std::vector<double>> &h) const noexcept ->
         {
             if (checkCoeficient(i, j))
             {   
-                h[i][j] = a2 * v[i][j] + 
-                            h2 * (v[i + 1][j] + v[i - 1][j]) +
-                            k2 * (v[i][j + 1] + v[i][j - 1]) +
-                            f(getX(i), getY(j));
+                d[i][j] = a2 * v[i][j] + 
+                          h2 * (v[i + 1][j] + v[i - 1][j]) +
+                          k2 * (v[i][j + 1] + v[i][j - 1]) +
+                          f(getX(i), getY(j));
             } else
             {
-                h[i][j] = v[i][j];
+                d[i][j] = v[i][j];
             }
             
         }
@@ -193,7 +192,7 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
                     {
                         int ni = i + dx[num];
                         int nj = j + dy[num];
-                        if (checkCoeficient(ni, nj) || isBoard(ni, nj))
+                        if (checkCoeficient(ni, nj))
                         {
                             res += h[ni][nj] * coef[num];
                         }
