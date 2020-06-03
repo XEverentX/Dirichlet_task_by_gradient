@@ -18,9 +18,9 @@ Task::Task()
     // -2*(pi^2)*exp((sin(pi*x*y))^2)*((2*(sin(pi*x*y)^2)+1)*(cos(pi*x*y)^2)-(sin(pi*x*y)^2))*((x^2)+(y^2))
 
     f = [] (double x, double y) -> double {
-        return -2. * util::sqr(M_PI) * util::sqr(exp((sin(M_PI * x * y)))) *
+        return -2. * util::sqr(M_PI) * exp(util::sqr(sin(M_PI * x * y))) *
                ((2. * util::sqr(sin(M_PI * x * y)) + 1) * 
-                util::sqr(cos(M_PI * x * y)) - util::sqr(sin(M_PI* x * y))) * 
+                util::sqr(cos(M_PI * x * y)) - util::sqr(sin(M_PI * x * y))) * 
                (util::sqr(x) + util::sqr(y));
     };
 }
