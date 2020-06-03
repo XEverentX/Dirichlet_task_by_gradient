@@ -27,7 +27,7 @@ namespace util
     inline auto scalarMul(const std::vector<std::vector<double>> &v1,
                           const std::vector<std::vector<double>> &v2) -> double
     {
-        auto result = 0;
+        double result = 0;
         int size = v1.size();
         for (int i = 0; i < size; i++)
         {
