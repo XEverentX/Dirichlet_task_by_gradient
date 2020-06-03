@@ -22,7 +22,6 @@ set_target_properties(library PROPERTIES CXX_STANDARD 17)
 add_executable(app
                application/mainwindow.cpp
                application/main.cpp
-               3rdparty/qcustomplot.cpp
 )
 
 target_link_libraries(app library)
