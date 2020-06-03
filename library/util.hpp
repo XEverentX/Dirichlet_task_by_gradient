@@ -4,6 +4,7 @@
 #define LIBRARY_UTIL_HPP_
 
 #include <vector>
+#include <cmath>
 
 namespace util 
 {
@@ -14,14 +15,18 @@ namespace util
     }
 
     template<typename T>
-    inline auto norm(const std::vector<T> &v) -> T
+    inline auto norm(const std::vector<std::vector<T>> &v) -> T
     {
         T result = 0;
-        for (auto x : v)
+        int size = v.size();
+        for (int i = 0; i < size; i++)
         {
-            result += sqr(x);
+            for (int j = 0; j < v[0].size(); j++)
+            {
+                result += sqr(v[i][j]);
+            }
         }
-        return sqrt(result);
+        return std::sqrt(result);
     }
 
     inline auto scalarMul(const std::vector<std::vector<double>> &v1,
