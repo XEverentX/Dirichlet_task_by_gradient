@@ -28,16 +28,16 @@ class Task final
 
     auto getU(double x, double y) const noexcept -> double;
 
+    auto checkCoeficient(int i, int j) const noexcept-> bool;
+
+    auto isBoard(int i, int j) const noexcept -> bool;
+
+    auto getDiscrepancy(std::vector<std::vector<double>> &v) const noexcept -> void;
+
  private:
     auto getX(int index) const -> double;
 
     auto getY(int index) const -> double;
-
-    auto getDiscrepancy(std::vector<std::vector<double>> &v) const noexcept -> void;
-
-    auto checkCoeficient(int i, int j) const noexcept-> bool;
-
-    auto isBoard(int i, int j) const noexcept -> bool;
 
     inline void calcParams();
 
