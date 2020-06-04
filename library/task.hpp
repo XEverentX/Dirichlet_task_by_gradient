@@ -34,6 +34,9 @@ class Task final
 
     auto getDiscrepancy(std::vector<std::vector<double>> &v) const noexcept -> void;
 
+    auto scalarMul(const std::vector<std::vector<double>> &v1,
+                   const std::vector<std::vector<double>> &v2) -> double;
+
  private:
     auto getX(int index) const -> double;
 

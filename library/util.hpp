@@ -28,22 +28,6 @@ namespace util
         }
         return std::sqrt(result);
     }
-
-    inline auto scalarMul(const std::vector<std::vector<double>> &v1,
-                          const std::vector<std::vector<double>> &v2) -> double
-    {
-        double result = 0;
-        int size = v1.size();
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < v1[0].size(); j++)
-            {
-                result += v1[i][j] * v2[i][j];
-            }
-        }
-
-        return result;
-    }
 }  // namespace util
 
 #endif  // LIBRARY_UTIL_HPP_

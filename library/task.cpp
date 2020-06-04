@@ -177,7 +177,7 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
             h = d;
         } else 
         {
-            double betta = util::scalarMul(ah, d) / util::scalarMul(ah, h);
+            double betta = scalarMul(ah, d) / scalarMul(ah, h);
             for (int j = 0; j <= m; j++)
             {
                 for (int i = 0; i <= n; i++)
@@ -208,8 +208,8 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
             }
         }
 
-        double alpha = -util::scalarMul(d, h) / util::scalarMul(ah, h);
-        
+        double alpha = -scalarMul(d, h) / scalarMul(ah, h);
+
         for (int j = 1; j < m; j++)
         {
             for (int i = 1; i < n; i++)
@@ -251,5 +251,24 @@ auto Task::solve(double minEps, int maxCount) -> Statistic
         }
     }
     
+    return result;
+}
+
+inline auto Task::scalarMul(const std::vector<std::vector<double>> &v1,
+                            const std::vector<std::vector<double>> &v2) -> double
+{
+    double result = 0;
+    int size = v1.size();
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < v1[0].size(); j++)
+        {
+            if (checkCoeficient(i, j))
+            {
+                result += v1[i][j] * v2[i][j];
+            }
+        }
+    }
+
     return result;
 }
